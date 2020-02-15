@@ -1,3 +1,6 @@
+.idea/
+*.ai
+
 # Logs
 logs
 *.log
