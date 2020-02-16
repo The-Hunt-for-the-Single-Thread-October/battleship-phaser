@@ -14,6 +14,6 @@ class Grid extends Phaser.GameObjects.Sprite {
 
         // Makes the grid clickable.
         this.setInteractive();
-        this.on('pointerup', this.onClick, this);
+        this.on('pointerup', this.onClick);
     }
 }
