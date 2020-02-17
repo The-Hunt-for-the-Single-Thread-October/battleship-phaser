@@ -8,12 +8,7 @@ class Grid extends Phaser.GameObjects.Sprite {
         this.nbCells = 10;
         this.cellWidth = 40;
 
-        // Adds the grid to the world and enables physics for it.
-        scene.physics.add.existing(this, true);
+        // Adds the grid to the world.
         scene.add.existing(this);
-
-        // Makes the grid clickable.
-        this.setInteractive();
-        this.on('pointerup', this.onClick);
     }
 }

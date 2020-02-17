@@ -7,6 +7,10 @@ class AttackGrid extends Grid {
 
         // Fetches the coordinates of the ShipsGrid when the confirmButton is clicked
         scene.events.on('shipsPlaced', coordinates => this.coordinates = coordinates);
+
+        // Makes the grid clickable.
+        this.setInteractive();
+        this.on('pointerup', this.onClick);
     }
 
     onClick() {

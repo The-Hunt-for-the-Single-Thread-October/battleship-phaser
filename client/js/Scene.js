@@ -14,7 +14,9 @@ class Scene extends Phaser.Scene {
 
     create() {
         // Creates both grids, each on one side of the screen.
-        new AttackGrid(this, 800, 200, 'emptyGrid');
-        new ShipsGrid(this, 200, 200, 'emptyGrid');
+        this.attackGrid = new AttackGrid(this, 800, 200, 'emptyGrid');
+        this.shipsGrid = new ShipsGrid(this, 200, 200, 'emptyGrid');
+
+        this.collisionObj = this.physics.add.staticGroup();
     }
 }

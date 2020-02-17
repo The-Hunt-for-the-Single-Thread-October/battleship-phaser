@@ -2,28 +2,21 @@ class ShipsGrid extends Grid {
     constructor(scene, x, y, key) {
         super(scene, x, y, key);
 
-        // Adds the ships to the scene
-        this.shipOfTwo = scene.add.image(40, 40, 'shipOfTwo').setOrigin(0);
-        this.shipOfThree = scene.add.image(80, 80, 'shipOfThree').setOrigin(0);
-        this.shipOfFour = scene.add.image(120, 120, 'shipOfFour').setOrigin(0);
+        this.shipOfTwo = new Ship(scene, 40, 40, 'shipOfTwo');
+        this.shipOfThree = new Ship(scene, 80, 80, 'shipOfThree');
+        this.shipOfFour = new Ship(scene, 120, 120, 'shipOfFour');
 
         // Array storing all the ships
         this.ships = [this.shipOfTwo, this.shipOfThree, this.shipOfFour];
-        this.ships.forEach(ship => ship.setInteractive({ draggable: true }));
 
         this.confirmButton = scene.add.image(300, 550, 'confirmButton');
         this.confirmButton.setInteractive();
 
         scene.input.on('drag', (pointer, gameObject, dragX, dragY) => {
-            // Moves the object only if the cursor moved to another cell
-            if (Math.abs(dragX - gameObject.x) >= this.cellWidth) {
-                /*If you move the mouse too fast you get errors of a few pixels,
-                 the following formula makes sure the position is always a multiple of this.cellWidth.*/
-                gameObject.x = Math.floor(dragX / this.cellWidth) * this.cellWidth;
-            }
-            if (Math.abs(dragY - gameObject.y) >= this.cellWidth) {
-                gameObject.y = Math.floor(dragY / this.cellWidth) * this.cellWidth;
-            }
+            // If you drag ships too fast you get errors of a few pixels,
+            // the following formulas make sure the position is always a multiple of this.cellWidth.
+            gameObject.x = Math.floor(dragX / this.cellWidth) * this.cellWidth;
+            gameObject.y = Math.floor(dragY / this.cellWidth) * this.cellWidth;
         });
 
         this.confirmButton.on('pointerup', () => {
@@ -48,12 +41,8 @@ class ShipsGrid extends Grid {
                 }
             }
 
-            // Indicates the AttackGrid that you ships are ready to be attacked
+            // Indicates the AttackGrid that the ships are ready to be attacked
             scene.events.emit('shipsPlaced', coordinates);
         });
-    }
-
-    onClick() {
-
     }
 }
