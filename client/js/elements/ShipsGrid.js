@@ -1,6 +1,8 @@
 class ShipsGrid extends Grid {
     constructor(scene, x, y, key) {
         super(scene, x, y, key);
+        this.x = x;
+        this.y = y;
 
         this.shipOfTwo = new Ship(scene, 40, 40, 'shipOfTwo');
         this.shipOfThree = new Ship(scene, 120, 120, 'shipOfThree');
@@ -12,28 +14,34 @@ class ShipsGrid extends Grid {
         this.confirmButton = scene.add.image(300, 550, 'confirmButton');
         this.confirmButton.setInteractive();
 
-        scene.input.on('dragstart', (pointer, ship) => {
-            ship.previousX = ship.x;
-            ship.previousY = ship.y;
-        });
+        this.ships.forEach(ship => {
+            ship.on('dragstart', (pointer, draX, dragY) => {
+                ship.previousX = ship.x;
+                ship.previousY = ship.y;
+            });
 
-        scene.input.on('drag', (pointer, ship, dragX, dragY) => {
-            // If you drag ships too fast you get errors of a few pixels,
-            // the following formulas make sure the position is always a multiple of this.cellWidth.
-            ship.x = ship.body.x = Math.floor(dragX / this.cellWidth) * this.cellWidth;
-            ship.y = ship.body.y = Math.floor(dragY / this.cellWidth) * this.cellWidth;
-        });
+            ship.on('drag', (pointer, dragX, dragY) => {
+                // If you drag ships too fast you get errors of a few pixels,
+                // the following formulas make sure the position is always a multiple of this.cellWidth.
+                ship.x = ship.body.x = Math.floor(dragX / this.cellWidth) * this.cellWidth;
+                ship.y = ship.body.y = Math.floor(dragY / this.cellWidth) * this.cellWidth;
+            });
 
-        scene.input.on('dragend', (pointer, ship) => {
-            if (ship.x + ship.width > x + this.width || // Checks if the ship goes beyond the right edge of the grid
-                ship.y + ship.height > y + this.height || // Checks if the ship goes beyond the bottom edge of the grid
-                ship.x < x || // Checks if the ship goes beyond the left edge of the grid
-                ship.y < y || // Checks if the ship goes beyond the top edge of the grid
-                this.checkOverlap(ship))
-            {
-                ship.x = ship.previousX;
-                ship.y = ship.previousY;
-            }
+            ship.on('dragend', (pointer, dragX, dragY) => {
+                if (this.goesOutOfBounds(ship) || this.overlaps(ship)) {
+                    ship.x = ship.body.x = ship.previousX;
+                    ship.y = ship.body.y = ship.previousY;
+                }
+            });
+
+            ship.on('doubleClick', () => {
+                ship.rotate(this.cellWidth);
+
+                if (this.goesOutOfBounds(ship) || this.overlaps(ship)) {
+                    // If the ship is not at a valid position, we rotate it back
+                    ship.rotate(this.cellWidth);
+                }
+            });
         });
 
         this.confirmButton.on('pointerup', () => {
@@ -45,11 +53,20 @@ class ShipsGrid extends Grid {
                     let posX = gridX * this.cellWidth;
                     let posY = gridY * this.cellWidth;
                     for (let ship of this.ships) {
-                        if ((posX === ship.x && posY === ship.y) || // Checks if the current cell is the top left cell of the current ship
-                            ((posX >= ship.x && posX < ship.x + ship.width) && (posY >= ship.y && posY < ship.y + ship.height))) // Checks if the current cell is any cell of the current ship other than the top left one
-                        {
-                            busy = true;
-                            break;
+                        if (!ship.isRotated) {
+                            if ((posX === ship.x && posY === ship.y) || // Checks if the current cell is the top left cell of the current ship
+                                ((posX >= ship.x && posX < ship.x + ship.width) && (posY >= ship.y && posY < ship.y + ship.height))) // Checks if the current cell is any cell of the current ship other than the top left one
+                            {
+                                busy = true;
+                                break;
+                            }
+                        } else {
+                            if ((posX === ship.x && posY === ship.y - this.cellWidth) || // Checks if the current cell is the top left cell of the current ship
+                                ((posX >= ship.x && posX < ship.x + ship.width) && (posY >= ship.y - this.cellWidth && posY < ship.y - this.cellWidth + ship.height))) // Checks if the current cell is any cell of the current ship other than the top left one
+                            {
+                                busy = true;
+                                break;
+                            }
                         }
                     }
                     coordinates.push({
@@ -60,21 +77,32 @@ class ShipsGrid extends Grid {
                 }
             }
 
+            // Prevent the player from moving the ships after the confirm button was clicked
+            this.ships.forEach(ship => ship.removeInteractive());
+
             // Indicates the AttackGrid that the ships are ready to be attacked
             scene.events.emit('shipsPlaced', coordinates);
         });
     }
 
-    checkOverlap(ship) {
+    overlaps(ship) {
         let overlaps = false;
-        this.ships.forEach(currentShip => {
+        for (let currentShip of this.ships) {
             if (ship !== currentShip) {
                 if(Phaser.Geom.Intersects.RectangleToRectangle(currentShip.getBounds(), ship.getBounds())) {
                     overlaps = true;
+                    break;
                 }
             }
-        });
+        }
 
         return overlaps;
+    }
+
+    goesOutOfBounds(ship) {
+        return ship.x + ship.width > this.x + this.width || // Checks if the ship goes beyond the right edge of the grid
+            ship.y + ship.height > this.y + this.height || // Checks if the ship goes beyond the bottom edge of the grid
+            ship.x < this.x || // Checks if the ship goes beyond the left edge of the grid
+            ship.y < this.y // Checks if the ship goes beyond the top edge of the grid
     }
 }

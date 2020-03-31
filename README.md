@@ -4,12 +4,17 @@ Battleship game made with Phaser 3.
 
 ## Run
 
-```bash
+```
 node server
 ```
+The project runs on http://localhost:3000
 
 ## State of project
 
-The red rectangle is draggable (almost) strictly in the left grid cells.
+The red rectangles are strictly draggable and rotatable: 
+* in the bounds of the left grid
+* not on top of each other
 
-When you click on a cell in the right grid it displays a message in the console saying if you hit a ship or not (cell with a ship on them are currently set randomly).
+After clicking the confirm button you:
+* can not drag or rotate the rectangles anymore
+* can click on a cell in the right grid and it will display a message in the console saying if you hit a ship or not.
