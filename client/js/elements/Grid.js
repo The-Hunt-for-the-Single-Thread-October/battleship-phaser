@@ -6,7 +6,7 @@ class Grid extends Phaser.GameObjects.Sprite {
         this.scene = scene;
 
         this.nbCells = 10;
-        this.cellWidth = 40;
+        this.cellWidth = this.width / this.nbCells;
 
         // Adds the grid to the world.
         scene.add.existing(this);

@@ -1,9 +1,12 @@
-class Scene extends Phaser.Scene {
-    constructor(key) {
-        super(key);
+class BootScene extends Phaser.Scene {
+    constructor() {
+        super("BootScene");
     }
 
     preload() {
+        this.add.text(400, 20, "Loading...", {
+            fontSize: "5em"
+        });
         // Loads all the assets for the game before running.
         this.load.image('emptyGrid', '../assets/emptyGrid.png');
         this.load.image('shipOfTwo', '../assets/shipOfTwo.png');
@@ -13,10 +16,6 @@ class Scene extends Phaser.Scene {
     }
 
     create() {
-        // Creates both grids, each on one side of the screen.
-        this.attackGrid = new AttackGrid(this, 600, 0, 'emptyGrid');
-        this.shipsGrid = new ShipsGrid(this, 0, 0, 'emptyGrid');
-
-        this.collisionObj = this.physics.add.staticGroup();
+        this.scene.start("ShipsScene");
     }
 }

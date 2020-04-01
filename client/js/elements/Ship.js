@@ -2,9 +2,8 @@ class Ship extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, key) {
         super(scene, x, y, key);
 
-        // Enables collisions for the ships and adds them to the scene
-        // The collision is set after 1ms because otherwise scene has not finished loading and collisionObj isn't defined
-        setInterval(() => scene.collisionObj.add(this, true), 1);
+        // Adds the ship to the world.
+        scene.add.existing(this);
 
         this.setInteractive({ draggable: true });
 

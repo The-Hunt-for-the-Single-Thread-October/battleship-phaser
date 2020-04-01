@@ -1,18 +1,18 @@
 const config = {
-    width: 1000,
-    height: 1000,
+    width: 480,
+    height: 800,
     type: Phaser.AUTO,
     parent: 'battleship',
     scale: {
-        mode: Phaser.Scale.WIDTH_CONTROLS_HEIGHT
+        mode: Phaser.Scale.FIT
     },
     physics: {
         default: 'arcade',
         arcade: {
-            debug: true
+            debug: false
         }
     },
-    scene: Scene
+    scene: [BootScene, ShipsScene, AttackScene]
 };
 
 const game = new Phaser.Game(config);
