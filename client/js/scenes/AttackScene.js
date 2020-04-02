@@ -10,7 +10,10 @@ class AttackScene extends Phaser.Scene {
 
         this.attackGrid = new AttackGrid(this, 40, 200, 'emptyGrid');
 
-        // TODO: Fetch the coordinates from the server
-        this.events.on('shipsPlaced', coordinates => this.attackGrid.coordinates = coordinates);
+        // Fetches the coordinates of the other player's ships
+        global.socket.on('shipsPlaced', coordinates => {
+            console.log("L'autre joueur a placé ses bateaux.");
+            this.attackGrid.coordinates = coordinates;
+        });
     }
 }

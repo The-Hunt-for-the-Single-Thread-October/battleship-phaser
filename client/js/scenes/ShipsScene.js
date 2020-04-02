@@ -11,10 +11,5 @@ class ShipsScene extends Phaser.Scene {
         this.shipsGrid = new ShipsGrid(this, 40, 200, 'emptyGrid');
 
         this.confirmButton = new ConfirmButton(this, 140, 650, 'confirmButton');
-
-        this.events.on("shipsPlaced", coordinates => {
-            // TODO: Send coordinates to the server
-            this.scene.start("AttackScene");
-        });
     }
 }
