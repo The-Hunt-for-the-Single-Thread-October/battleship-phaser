@@ -26,22 +26,15 @@ class BootScene extends Phaser.Scene {
         if (room.id && room.maxClients && room.clients) {
             global.socket.emit("join", JSON.stringify(room));
             this.text.setText("Waiting for the other player...");
-            console.log("J'ai rejoint");
         } else {
             this.text.setText("Error in URL");
-            //this.scene.start("ShipsScene");
+            this.scene.start("ShipsScene");
         }
 
         global.socket.on("roomJoined", updatedRoom => {
             global.room = updatedRoom;
-            console.log("Quelqu'un a rejoint");
-            console.log(updatedRoom.clients);
-            console.log(updatedRoom.maxClients);
             if (updatedRoom.clients == updatedRoom.maxClients) {
-                console.log("La game est full");
                 this.scene.start("ShipsScene");
-            } else {
-                console.log("La game n'est pas full");
             }
         });
     }

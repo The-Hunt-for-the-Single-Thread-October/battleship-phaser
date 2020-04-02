@@ -40,11 +40,6 @@ class ShipsGrid extends Grid {
                 }
             });
         });
-
-        global.socket.on("shipsPlaced", () => {
-            // Prevent the player from moving the ships after the confirm button was clicked
-            this.ships.forEach(ship => ship.removeInteractive());
-        });
     }
 
     overlaps(ship) {

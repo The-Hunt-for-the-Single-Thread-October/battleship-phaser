@@ -53,7 +53,7 @@ class ConfirmButton extends Phaser.GameObjects.Sprite {
         }
 
         // Indicates the server that the ships are ready to be attacked
-        global.socket.emit('shipsPlaced', global.room.id, coordinates);
-        this.scene.scene.start("AttackScene");
+        //global.socket.emit('shipsPlaced', global.room.id, coordinates);
+        //this.scene.scene.start("AttackScene");
     }
 }

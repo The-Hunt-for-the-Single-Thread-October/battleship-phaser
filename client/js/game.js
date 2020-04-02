@@ -17,7 +17,8 @@ const config = {
 
 const global = {
     socket: io("http://51.91.8.97:4002/"),
-    room: {}
+    room: null,
+    coordinates: null
 };
 
 const game = new Phaser.Game(config);

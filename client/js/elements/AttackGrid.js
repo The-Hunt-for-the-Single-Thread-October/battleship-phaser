@@ -2,16 +2,13 @@ class AttackGrid extends Grid {
     constructor(scene, x, y, key) {
         super(scene, x, y, key);
 
-        // Creates a table of the grid cells' coordinates.
-        this.coordinates = null;
-
         // Makes the grid clickable.
         this.setInteractive();
         this.on('pointerup', this.onClick);
     }
 
     onClick() {
-        if (this.coordinates) {
+        if (global.coordinates) {
             // Coordinates of the click relative to the grid and not the world
             let clickY = Math.floor((this.scene.input.activePointer.worldY - this.getBounds().y) / this.cellWidth);
             let clickX = Math.floor((this.scene.input.activePointer.worldX - this.getBounds().x) / this.cellWidth);
@@ -26,7 +23,7 @@ class AttackGrid extends Grid {
             let indexInCoordinates = (clickY) * 10 + clickX;
 
             // Busy tells if a ship is on the cell.
-            if (this.coordinates[indexInCoordinates].busy) {
+            if (global.coordinates[indexInCoordinates].busy) {
                 console.log("You touched a ship! at the coordinates "+indexInCoordinates);
             } else {
                 console.log("You missed at the coordinates "+indexInCoordinates);
