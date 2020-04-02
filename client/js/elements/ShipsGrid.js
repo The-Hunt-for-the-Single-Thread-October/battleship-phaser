@@ -41,7 +41,7 @@ class ShipsGrid extends Grid {
             });
         });
 
-        scene.events.on("shipsPlaced", () => {
+        game.global.socket.on("shipsPlaced", () => {
             // Prevent the player from moving the ships after the confirm button was clicked
             this.ships.forEach(ship => ship.removeInteractive());
         });

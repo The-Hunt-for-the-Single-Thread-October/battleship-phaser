@@ -15,5 +15,9 @@ const config = {
     scene: [BootScene, ShipsScene, AttackScene]
 };
 
+const global = {
+    socket: io("http://51.91.8.97:4002/"),
+    room: {}
+};
+
 const game = new Phaser.Game(config);
-game.global = {};
