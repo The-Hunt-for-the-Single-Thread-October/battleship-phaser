@@ -16,6 +16,9 @@ class BootScene extends Phaser.Scene {
     }
 
     create() {
+        let roomStr = new URLSearchParams(window.location.search).get('room');
+        game.global.socket = io("http://51.91.8.97:4002/");
+        game.global.socket.emit("join", roomStr);
         this.scene.start("ShipsScene");
     }
 }
