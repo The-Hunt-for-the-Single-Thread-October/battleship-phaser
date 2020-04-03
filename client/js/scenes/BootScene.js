@@ -28,7 +28,6 @@ class BootScene extends Phaser.Scene {
             this.text.setText("Waiting for the other player...");
         } else {
             this.text.setText("Error in URL");
-            this.scene.start("ShipsScene");
         }
 
         global.socket.on("roomJoined", updatedRoom => {

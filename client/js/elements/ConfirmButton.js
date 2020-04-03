@@ -25,8 +25,8 @@ class ConfirmButton extends Phaser.GameObjects.Sprite {
         for (let gridY = 0; gridY < this.grid.nbCells; gridY++) {
             for (let gridX = 0; gridX < this.grid.nbCells; gridX++) {
                 let busy = false;
-                let posX = gridX * this.grid.cellWidth;
-                let posY = gridY * this.grid.cellWidth;
+                let posX = this.grid.x + gridX * this.grid.cellWidth;
+                let posY = this.grid.y + gridY * this.grid.cellWidth;
                 for (let ship of this.grid.ships) {
                     if (!ship.isRotated) {
                         if ((posX === ship.x && posY === ship.y) || // Checks if the current cell is the top left cell of the current ship
@@ -53,7 +53,7 @@ class ConfirmButton extends Phaser.GameObjects.Sprite {
         }
 
         // Indicates the server that the ships are ready to be attacked
-        //global.socket.emit('shipsPlaced', global.room.id, coordinates);
-        //this.scene.scene.start("AttackScene");
+        global.socket.emit("shipsPlaced", global.room.id, coordinates);
+        this.scene.scene.start("AttackScene");
     }
 }
