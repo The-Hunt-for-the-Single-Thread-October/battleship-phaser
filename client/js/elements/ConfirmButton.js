@@ -14,8 +14,6 @@ class ConfirmButton extends Phaser.GameObjects.Sprite {
         // Makes the button clickable
         this.setInteractive();
 
-        this.setOrigin(0);
-
         this.on('pointerup', this.onClick);
     }
 

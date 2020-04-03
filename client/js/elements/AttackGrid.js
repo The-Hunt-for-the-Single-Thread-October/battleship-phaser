@@ -20,16 +20,19 @@ class AttackGrid extends Grid {
                                    = 12
                 The clicked cell has the coordinates (1,2) so the object representing this cell is in this.coordinates[12].
             */
-            let indexInCoordinates = (clickY) * 10 + clickX;
+            let indexInCoordinates = clickY * 10 + clickX;
 
             // Busy tells if a ship is on the cell.
             if (global.coordinates[indexInCoordinates].busy) {
                 console.log("You touched a ship! at the coordinates "+indexInCoordinates);
+                this.scene.text.setText("You touched!");
             } else {
                 console.log("You missed at the coordinates "+indexInCoordinates);
+                this.scene.text.setText("You missed...");
             }
         } else {
-            console.log("Confirm you ships position first!");
+            console.log("Wait...");
+            this.scene.text.setText("Wait...");
         }
     }
 }
