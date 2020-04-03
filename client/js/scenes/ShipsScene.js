@@ -13,9 +13,18 @@ class ShipsScene extends Phaser.Scene {
         this.confirmButton = new ConfirmButton(this, 240, 700, 'confirmButton');
 
         // Fetches the coordinates of the other player's ships
-        global.socket.on('shipsPlaced', coordinates => {
-            console.log("L'autre joueur a placé ses bateaux.");
+        global.socket.on("shipsPlaced", coordinates => {
             global.coordinates = coordinates;
+        });
+
+        global.socket.on("touched", coordinates => {
+            this.add.sprite(coordinates.x, coordinates.y, "touchedIcon").setOrigin(0);
+        });
+
+        global.socket.on("missed", coordinates => {
+            this.add.sprite(coordinates.x, coordinates.y, "missedIcon").setOrigin(0);
+            this.scene.sleep("ShipsScene");
+            this.scene.run("AttackScene");
         });
     }
 }
