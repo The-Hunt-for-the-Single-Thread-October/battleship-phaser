@@ -23,8 +23,10 @@ class ShipsScene extends Phaser.Scene {
 
         global.socket.on("missed", coordinates => {
             this.add.sprite(coordinates.x, coordinates.y, "missedIcon").setOrigin(0);
-            this.scene.sleep("ShipsScene");
-            this.scene.run("AttackScene");
+            setTimeout(() => {
+                this.scene.sleep("ShipsScene");
+                this.scene.run("AttackScene");
+            }, 1000);
         });
     }
 }

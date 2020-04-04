@@ -53,6 +53,12 @@ class ConfirmButton extends Phaser.GameObjects.Sprite {
         // Prevents the player from moving the ships after the confirm button was clicked
         this.grid.ships.forEach(ship => ship.removeInteractive());
 
+        // Prevents the player from clicking the confirm button more than once
+        this.removeInteractive();
+
+        // Makes the confirm button disappear after clicking it
+        this.visible = false;
+
         // Indicates the server that the ships are ready to be attacked
         global.socket.emit("shipsPlaced", global.room.id, coordinates);
         this.scene.scene.sleep("ShipsScene");

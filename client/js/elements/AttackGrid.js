@@ -29,10 +29,14 @@ class AttackGrid extends Grid {
                 global.socket.emit("touched", global.room.id, coordinates);
                 this.scene.text.setText("You touched!");
             } else {
+                this.disableInteractive();
                 this.scene.add.sprite(coordinates.x, coordinates.y, "missedIcon").setOrigin(0);
                 global.socket.emit("missed", global.room.id, coordinates);
-                this.scene.scene.sleep("AttackScene");
-                this.scene.scene.run("ShipsScene");
+                setTimeout(() => {
+                    this.setInteractive();
+                    this.scene.scene.sleep("AttackScene");
+                    this.scene.scene.run("ShipsScene");
+                }, 1000);
             }
         }
     }
