@@ -12,6 +12,9 @@ class ShipsGrid extends Grid {
         this.ships = [this.shipOfTwo, this.shipOfThree, this.shipOfFour];
 
         this.ships.forEach(ship => {
+            // Calculates the total number of cells to hit to win the game
+            global.totalCellsToHit += ship.length / this.cellWidth;
+
             ship.on('dragstart', (pointer, draX, dragY) => {
                 ship.previousX = ship.x;
                 ship.previousY = ship.y;

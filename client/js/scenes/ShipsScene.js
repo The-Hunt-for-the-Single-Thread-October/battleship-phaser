@@ -28,5 +28,9 @@ class ShipsScene extends Phaser.Scene {
                 this.scene.run("AttackScene");
             }, 1000);
         });
+
+        global.socket.on("win", () => {
+            this.scene.start("EndScene", {text: "Lose..."})
+        });
     }
 }

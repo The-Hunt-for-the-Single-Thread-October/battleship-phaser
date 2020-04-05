@@ -10,6 +10,8 @@ class Ship extends Phaser.GameObjects.Sprite {
         // Puts the origin of the ship in its top left corner (makes the placement on the grid easier)
         this.setOrigin(0);
 
+        this.length = this.width >= this.height ? this.width : this.height;
+
         // Bool that indicates if the ship has been rotated rotated or not
         this.isRotated = false;
 

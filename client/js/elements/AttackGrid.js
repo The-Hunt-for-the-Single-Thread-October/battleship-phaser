@@ -5,6 +5,8 @@ class AttackGrid extends Grid {
         // Makes the grid clickable.
         this.setInteractive();
         this.on('pointerup', this.onClick);
+
+        this.cellsHit = 0;
     }
 
     onClick() {
@@ -25,9 +27,17 @@ class AttackGrid extends Grid {
 
             // Busy tells if a ship is on the cell.
             if (coordinates.busy) {
+                this.cellsHit++;
                 this.scene.add.sprite(coordinates.x, coordinates.y, "touchedIcon").setOrigin(0);
                 global.socket.emit("touched", global.room.id, coordinates);
                 this.scene.text.setText("You touched!");
+
+                if (this.cellsHit >= global.totalCellsToHit) {
+                    setTimeout(() => {
+                        global.socket.emit("win", global.room.id);
+                        this.scene.scene.start("EndScene", {text: "Win!"});
+                    }, 1000);
+                }
             } else {
                 this.disableInteractive();
                 this.scene.add.sprite(coordinates.x, coordinates.y, "missedIcon").setOrigin(0);
