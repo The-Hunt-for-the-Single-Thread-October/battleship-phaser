@@ -5,6 +5,8 @@ class Ship extends Phaser.GameObjects.Sprite {
         // Adds the ship to the world.
         scene.add.existing(this);
 
+        this.name = key;
+
         this.setInteractive({ draggable: true });
 
         // Puts the origin of the ship in its top left corner (makes the placement on the grid easier)

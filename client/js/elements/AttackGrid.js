@@ -7,6 +7,13 @@ class AttackGrid extends Grid {
         this.on('pointerup', this.onClick);
 
         this.cellsHit = 0;
+
+        // Object that represents the amount of times each ship has been hit
+        this.shipsHit = {
+            shipOfTwo: 0,
+            shipOfThree: 0,
+            shipOfFour: 0
+        }
     }
 
     onClick() {
@@ -28,9 +35,23 @@ class AttackGrid extends Grid {
             // Busy tells if a ship is on the cell.
             if (coordinates.busy) {
                 this.cellsHit++;
+                this.shipsHit[coordinates.shipName]++;
                 this.scene.add.sprite(coordinates.x, coordinates.y, "touchedIcon").setOrigin(0);
                 global.socket.emit("touched", global.room.id, coordinates);
                 this.scene.text.setText("You touched!");
+
+                if (this.shipsHit[coordinates.shipName] >= coordinates.shipLength / this.cellWidth) {
+                    let shipInfo = {
+                        origin: coordinates.shipOrigin,
+                        length: coordinates.shipLength,
+                        orientation: coordinates.shipOrientation
+                    };
+
+                    global.drawSinkLine(this.scene, shipInfo, this.cellWidth);
+
+                    global.socket.emit("sink", global.room.id, shipInfo);
+                    this.scene.text.setText("You sank");
+                }
 
                 if (this.cellsHit >= global.totalCellsToHit) {
                     setTimeout(() => {

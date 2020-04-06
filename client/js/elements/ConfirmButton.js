@@ -23,6 +23,10 @@ class ConfirmButton extends Phaser.GameObjects.Sprite {
         for (let gridY = 0; gridY < this.grid.nbCells; gridY++) {
             for (let gridX = 0; gridX < this.grid.nbCells; gridX++) {
                 let busy = false;
+                let shipName = null;
+                let shipOrigin = null;
+                let shipOrientation = null;
+                let shipLength = null;
                 let posX = this.grid.x + gridX * this.grid.cellWidth;
                 let posY = this.grid.y + gridY * this.grid.cellWidth;
                 for (let ship of this.grid.ships) {
@@ -30,6 +34,10 @@ class ConfirmButton extends Phaser.GameObjects.Sprite {
                         if ((posX === ship.x && posY === ship.y) || // Checks if the current cell is the top left cell of the current ship
                             ((posX >= ship.x && posX < ship.x + ship.width) && (posY >= ship.y && posY < ship.y + ship.height))) // Checks if the current cell is any cell of the current ship other than the top left one
                         {
+                            shipName = ship.name;
+                            shipOrigin = {x: ship.x, y: ship.y};
+                            shipOrientation = "vertical";
+                            shipLength = ship.length;
                             busy = true;
                             break;
                         }
@@ -37,12 +45,20 @@ class ConfirmButton extends Phaser.GameObjects.Sprite {
                         if ((posX === ship.x && posY === ship.y - this.grid.cellWidth) || // Checks if the current cell is the top left cell of the current ship
                             ((posX >= ship.x && posX < ship.x + ship.width) && (posY >= ship.y - this.grid.cellWidth && posY < ship.y - this.grid.cellWidth + ship.height))) // Checks if the current cell is any cell of the current ship other than the top left one
                         {
+                            shipName = ship.name;
+                            shipOrigin = {x: ship.x, y: ship.y};
+                            shipOrientation = "horizontal";
+                            shipLength = ship.length;
                             busy = true;
                             break;
                         }
                     }
                 }
                 coordinates.push({
+                    shipName: shipName,
+                    shipOrigin: shipOrigin,
+                    shipOrientation: shipOrientation,
+                    shipLength: shipLength,
                     x: posX,
                     y: posY,
                     busy: busy

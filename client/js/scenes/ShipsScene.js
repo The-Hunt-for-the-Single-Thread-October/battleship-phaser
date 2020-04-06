@@ -29,6 +29,10 @@ class ShipsScene extends Phaser.Scene {
             }, 1000);
         });
 
+        global.socket.on("sink", shipInfo => {
+            global.drawSinkLine(this, shipInfo, this.shipsGrid.cellWidth);
+        });
+
         global.socket.on("win", () => {
             this.scene.start("EndScene", {text: "Lose..."})
         });
