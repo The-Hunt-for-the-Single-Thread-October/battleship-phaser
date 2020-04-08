@@ -20,6 +20,8 @@ const global = {
     room: null,
     coordinates: null,
     totalCellsToHit: null,
+    orderArray: null,
+    shipsPlaced: false,
     drawSinkLine: (scene, shipInfo, cellWidth) => {
         let startX = shipInfo.orientation === "vertical" ? shipInfo.origin.x + cellWidth / 2 : shipInfo.origin.x;
         let startY = shipInfo.orientation === "vertical" ? shipInfo.origin.y : shipInfo.origin.y - cellWidth / 2;

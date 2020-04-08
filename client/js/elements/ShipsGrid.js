@@ -4,12 +4,14 @@ class ShipsGrid extends Grid {
         this.x = x;
         this.y = y;
 
-        this.shipOfTwo = new Ship(scene, this.x + 40, this.y + 40, 'shipOfTwo');
-        this.shipOfThree = new Ship(scene, this.x + 120, this.y + 120, 'shipOfThree');
-        this.shipOfFour = new Ship(scene, this.x + 200, this.y + 200, 'shipOfFour');
+        this.carrier = new Ship(scene, this.x + this.cellWidth, this.y + this.cellWidth, 'carrier');
+        this.battleship = new Ship(scene, this.x + this.cellWidth * 3, this.y + this.cellWidth * 3, 'battleship');
+        this.cruiser = new Ship(scene, this.x + this.cellWidth * 5, this.y + this.cellWidth * 5, 'cruiser');
+        this.cruiser2 = new Ship(scene, this.x + this.cellWidth * 7, this.y + this.cellWidth * 5, 'cruiser');
+        this.destroyer = new Ship(scene, this.x + this.cellWidth * 9, this.y + this.cellWidth * 7, 'destroyer');
 
         // Array storing all the ships
-        this.ships = [this.shipOfTwo, this.shipOfThree, this.shipOfFour];
+        this.ships = [this.carrier, this.battleship, this.cruiser, this.cruiser2, this.destroyer];
 
         this.ships.forEach(ship => {
             // Calculates the total number of cells to hit to win the game

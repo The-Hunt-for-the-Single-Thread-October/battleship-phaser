@@ -4,14 +4,13 @@ class AttackScene extends Phaser.Scene {
     }
 
     create() {
-        this.add.text(240, 80, "AttackGrid", {
+        this.add.text(config.width / 2, 80, "AttackGrid", {
             fontSize: "5em"
         }).setOrigin(0.5);
 
         this.attackGrid = new AttackGrid(this, 40, 200, 'emptyGrid');
 
-        let text = global.coordinates ? "Ready to attack!" : "Wait...";
-        this.text = this.add.text(240, 700, text, {
+        this.text = this.add.text(config.width / 2, 700, "Ready to attack!", {
             fontSize: "3em"
         }).setOrigin(0.5);
 

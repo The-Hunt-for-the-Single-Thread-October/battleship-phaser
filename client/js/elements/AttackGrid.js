@@ -10,9 +10,11 @@ class AttackGrid extends Grid {
 
         // Object that represents the amount of times each ship has been hit
         this.shipsHit = {
-            shipOfTwo: 0,
-            shipOfThree: 0,
-            shipOfFour: 0
+            carrier: 0,
+            battleship: 0,
+            cruiser: 0,
+            cruiser2: 0,
+            destroyer: 0
         }
     }
 

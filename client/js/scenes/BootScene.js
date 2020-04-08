@@ -9,6 +9,10 @@ class BootScene extends Phaser.Scene {
         });
         // Loads all the assets for the game before running.
         this.load.image('emptyGrid', '../assets/emptyGrid.png');
+        this.load.image('carrier', '../assets/carrier.png');
+        this.load.image('battleship', '../assets/battleship.png');
+        this.load.image('cruiser', '../assets/cruiser.png');
+        this.load.image('destroyer', '../assets/destroyer.png');
         this.load.image('shipOfTwo', '../assets/shipOfTwo.png');
         this.load.image('shipOfThree', '../assets/shipOfThree.png');
         this.load.image('shipOfFour', '../assets/shipOfFour.png');
@@ -34,9 +38,11 @@ class BootScene extends Phaser.Scene {
 
         global.socket.on("roomJoined", updatedRoom => {
             global.room = updatedRoom;
-            if (updatedRoom.clients == updatedRoom.maxClients) {
-                this.scene.start("ShipsScene");
-            }
+        });
+
+        global.socket.on("randomStart", orderArray => {
+            global.orderArray = orderArray;
+            this.scene.start("ShipsScene");
         });
     }
 }
