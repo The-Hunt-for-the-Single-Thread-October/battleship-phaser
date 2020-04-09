@@ -7,7 +7,7 @@ class ShipsGrid extends Grid {
         this.carrier = new Ship(scene, this.x + this.cellWidth, this.y + this.cellWidth, 'carrier');
         this.battleship = new Ship(scene, this.x + this.cellWidth * 3, this.y + this.cellWidth * 3, 'battleship');
         this.cruiser = new Ship(scene, this.x + this.cellWidth * 5, this.y + this.cellWidth * 5, 'cruiser');
-        this.cruiser2 = new Ship(scene, this.x + this.cellWidth * 7, this.y + this.cellWidth * 5, 'cruiser');
+        this.cruiser2 = new Ship(scene, this.x + this.cellWidth * 7, this.y + this.cellWidth * 5, 'cruiser2');
         this.destroyer = new Ship(scene, this.x + this.cellWidth * 9, this.y + this.cellWidth * 7, 'destroyer');
 
         // Array storing all the ships

@@ -58,7 +58,7 @@ class AttackGrid extends Grid {
                 if (this.cellsHit >= global.totalCellsToHit) {
                     setTimeout(() => {
                         global.socket.emit("win", global.room.id);
-                        this.scene.scene.start("EndScene", {text: "Win!"});
+                        window.nsWebViewInterface.emit("gameEnded", "Victoire !");
                     }, 1000);
                 }
             } else {

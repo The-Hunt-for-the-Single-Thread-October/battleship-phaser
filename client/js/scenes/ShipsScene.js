@@ -38,7 +38,7 @@ class ShipsScene extends Phaser.Scene {
         });
 
         global.socket.on("win", () => {
-            this.scene.start("EndScene", {text: "Lose..."})
+            window.nsWebViewInterface.emit("gameEnded", "Défaite...");
         });
     }
 }
